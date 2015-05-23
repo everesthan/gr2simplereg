@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./mainTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:head>
+                    <title>Register Form1</title>
+                    <script>
+                        function validateEmail()
+                    {
+                    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                    var email = $.trim($("#registrationForm\\:email").val());
+                    if(email ==''){
+                    $("#registrationForm\\:emailMsg").text("");
+                    $("#registrationForm\\:emailMsg").attr("class", "");
+                    return;
+                    }
+                    if( emailReg.test( email ) ) {
+                    $("#registrationForm\\:emailMsg").text("Geçerli e-posta adresi");
+                    $("#registrationForm\\:emailMsg").attr("class", "ui-messages-info ui-widget ui-corner-all ui-messages-info-summary");
+                    } else {
+                    $("#registrationForm\\:emailMsg").text("Geçersiz e-posta adresi");
+                    $("#registrationForm\\:emailMsg").attr("class", "ui-message-error ui-widget ui-corner-all ui-message-error-detail");
+                    }
+                    }
+                        
+                    </script>
+                </h:head>
+                
+                <h:body>
+                    <h:form id="registrationForm">
+                        <p:panel header="Registration Form" style="width: 600px">
+                            <p:messages/>
+                            <p:panelGrid columns="3">
+                                
+                                <p:outputLabel value="User Name"/>
+                                <p:inputText id="username" label="User Name" value="#{registerBean.user.username}"
+                                             required="true">
+                                    <p:ajax event="keyup" update="usernameMsg"/>
+                                </p:inputText>
+                                <p:message for="username" id="usernameMsg"/>
+                                           
+                                <p:outputLabel value="Password"/>
+                                <p:password id="password" label="Password" value="#{registerBean.user.password}"
+                                             required="true">
+                                    <f:validateLength minimum="4"/>
+                                </p:password>
+                                <p:message for="password" id="passwordMsg"/>
+                                
+                                <p:outputLabel value="First name"/>
+                                <p:inputText id="firstName" label="First Name" value="#{registerBean.user.firstName}"
+                                             required="true">
+                                
+                                <p:ajax event="keyup" update="firstNameMsg"/>
+                                </p:inputText>
+                                <p:message for="firstName" id="firstNameMsg"/>
+                                
+                                 <p:outputLabel value="Last name"/>
+                                 <p:inputText id="lastName" label="Last Name" value="#{registerBean.user.lastName}"
+                                             required="true">
+                                </p:inputText>
+                                <p:message for="lastName" id="lastNameMsg"/>
+                                
+                                 <p:outputLabel value="e-Mail"/>
+                                 
+                                 <p:inputText id="email" label="E-Mail" value="#{registerBean.user.email}"
+                                              required="true" onchange="validateEmail()">
+                                </p:inputText>
+                                <p:message for="email" id="emailMsg"/>
+                                
+                                
+                                <p:outputLabel value="Salary"/>
+                                <p:inputText id="salary" label="Salary" value="#{registerBean.user.salary}"
+                                             required="true">
+                                </p:inputText>
+                                <p:message for="salary" id="salaryMsg"/>
+ 
+                           
+                              <p:outputLabel value="Birthdate"/>
+                              <p:calendar id="birthdate"
+                                          label="Birthdate"
+                                          value="#{registerBean.user.birthdate}"
+                                          showOn="button"
+                                          pattern="dd/MM/yyyy"
+                                          navigator="true"
+                                          locale="tr"/>
+                              <p:message id="birthdateMsg" for ="birthdate"/>
+                              
+                              <p:outputLabel value=""/>
+                              <p:commandButton value="Register"
+                                               action="#{registerBean.register()}"
+                                               update="registrationForm"/>
+                              <p:outputLabel value=""/>
+                                          
+                                
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </h:body>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
